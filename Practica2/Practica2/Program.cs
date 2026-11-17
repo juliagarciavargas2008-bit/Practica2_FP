@@ -15,9 +15,11 @@
             int[] suelo, techo;
             int fil, ascenso, frame, puntos;
             bool colision;
-
-
+            
             Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision);
+            RenderTecho(techo);
+            RenderSuelo(suelo);
+            
         }
 
         static void Inicializa(out int[] suelo, out int[] techo, out int fil, out int ascenso, out int frame, out int puntos, out bool colision)
@@ -35,67 +37,42 @@
                 suelo[i] = 0;
                 techo [i] = ALTO-1;
             }
-            //Console.Write(" " + suelo[1] + techo[1]);
         }
 
         void Render(int[] suelo, int[] techo, int fil, int frame, int puntos, bool colision)
         {
-            RenderTecho(techo, frame);
+            RenderTecho(techo);
+            RenderSuelo(suelo);
         }
-         static void RenderTecho(int[] techo, int frame)
+         static void RenderTecho(int[] techo)
         {
-            int[] techoV = new int [ANCHO*2];       //Vector real de representación
-            int j = 0;
-            for (int i = 0; i < techoV.Length; i += 2) 
-            {
-                techoV[i] = techoV[i + 1] = techo[j];
-                j++;
-            }
-            
-            for (int i = 0; i < techoV.Length; i++)  //Cabio de origen de cordenadas
-            {
-                techoV[i] = ALTO - techoV[i];
-            }
-
             Console.BackgroundColor = ConsoleColor.Blue;
-            for (int i =0; i < (ANCHO * 2); i++)
-            { 
-                for (int q = 0; q < techoV[i]; q++)
+            for (int i = 0; i < techo.Length; i++)
+            {
+                for (int j = 0; j <= (ALTO - 1 -techo[i]); j++)
                 {
-                    Console.SetCursorPosition(i, q);
-                    Console.Write(" ");
-
+                    Console.SetCursorPosition((2 * i), (ALTO - 1 -techo[i] -j));
+                    Console.Write("a");
+                    Console.SetCursorPosition(2 * i + 1, (ALTO -1 -techo[i] -j));
+                    Console.Write("a");
                 }
             }
             Console.ResetColor();
         }
-        static void RenderSuelo(int[] suelo, int frame)
+        static void RenderSuelo(int[] suelo)
         {
-            int[] sueloV = new int[ANCHO * 2];       //Vector real de representación
-            int j = 0;
-            for (int i = 0; i < sueloV.Length; i += 2)
-            {
-                sueloV[i] = sueloV[i + 1] = suelo[j];
-                j++;
-            }
-
-            for (int i = 0; i < sueloV.Length; i++)  //Cabio de origen de cordenadas
-            {
-                sueloV[i] = ALTO - sueloV[i];
-            }
-
             Console.BackgroundColor = ConsoleColor.Blue;
-            for (int i = 0; i < (ANCHO * 2); i++)
+            for (int i = 0; i < suelo.Length; i++)
             {
-                for (int q = 0; q < sueloV[i]; q++)
+                for (int j = 0;  j <= (suelo[i]); j++)
                 {
-                    Console.SetCursorPosition(i, q);
-                    Console.Write(" ");
-
+                    Console.SetCursorPosition((2*i), (ALTO -1 -suelo[i]) +j);
+                    Console.Write("a");
+                    Console.SetCursorPosition(2*i+1, (ALTO -1 -suelo[i]) +j);
+                    Console.Write("a");
                 }
             }
-            Console.ResetColor();
-            Console.SetCursorPosition(0, ALTO);
+            Console.ResetColor ();
 
         }
 
