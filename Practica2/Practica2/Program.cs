@@ -17,8 +17,8 @@
             bool colision;
             
             Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision);
-            RenderTecho(techo);
-            RenderSuelo(suelo);
+            RenderPajaro(fil, COL_BIRD, colision);
+            RenderTechoSuelo(techo, suelo);
             
         }
 
@@ -41,40 +41,43 @@
 
         void Render(int[] suelo, int[] techo, int fil, int frame, int puntos, bool colision)
         {
-            RenderTecho(techo);
-            RenderSuelo(suelo);
+            RenderPajaro(fil, COL_BIRD, colision);
+            RenderTechoSuelo(techo, suelo);
         }
-         static void RenderTecho(int[] techo)
+        static void RenderTechoSuelo(int[] techo, int[] suelo)
         {
             Console.BackgroundColor = ConsoleColor.Blue;
-            for (int i = 0; i < techo.Length; i++)
+            for (int i = 0; i < techo.Length; i++)          //Mira el componente de los Arrays, son iguales asi que da igual quien este en la condición
             {
-                for (int j = 0; j <= (ALTO - 1 -techo[i]); j++)
+                for (int j = 0; j <= (ALTO - 1 -techo[i]); j++) //En función de cuanto valga el componente repita la acción tantos bloques como haya.
                 {
-                    Console.SetCursorPosition((2 * i), (ALTO - 1 -techo[i] -j));
+                    Console.SetCursorPosition((2 * i), (ALTO - 1 -techo[i] -j)); //Pinta el primero y luego el segundo, en la posición 13-X-j; para que suba -j
                     Console.Write("a");
-                    Console.SetCursorPosition(2 * i + 1, (ALTO -1 -techo[i] -j));
+                    Console.SetCursorPosition(2 * i + 1, (ALTO -1 -techo[i] -j)); //Pinta el segundo bloque, la lógica es la misma que en computadores
+                    Console.Write("a");
+                }
+                
+                for (int j = 0; j <= (suelo[i]); j++)       //Mira el componente del suelo y repite el for tantas veces indique.
+                {
+                    Console.SetCursorPosition((2 * i), (ALTO - 1 - suelo[i]) + j);  //Posicion desde 13-x+j; para que pinte hacia abajo
+                    Console.Write("a");
+                    Console.SetCursorPosition(2 * i + 1, (ALTO - 1 - suelo[i]) + j); //Segundo bloque
                     Console.Write("a");
                 }
             }
             Console.ResetColor();
         }
-        static void RenderSuelo(int[] suelo)
+        static void RenderPajaro(int fil, int COL_BIRD, bool colision)
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            for (int i = 0; i < suelo.Length; i++)
+            Console.BackgroundColor = ConsoleColor.Magenta;
+            Console.SetCursorPosition(COL_BIRD, fil);
+            if (!colision) Console.Write("->");
+            else
             {
-                for (int j = 0;  j <= (suelo[i]); j++)
-                {
-                    Console.SetCursorPosition((2*i), (ALTO -1 -suelo[i]) +j);
-                    Console.Write("a");
-                    Console.SetCursorPosition(2*i+1, (ALTO -1 -suelo[i]) +j);
-                    Console.Write("a");
-                }
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.Write("**");
             }
-            Console.ResetColor ();
-
+            Console.ResetColor();
         }
-
     }
 }
