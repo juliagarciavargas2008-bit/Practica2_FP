@@ -17,8 +17,7 @@
             bool colision;
             
             Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision);
-            RenderPajaro(fil, COL_BIRD, colision);
-            RenderTechoSuelo(techo, suelo);
+            Render(suelo, techo, fil, ascenso, frame, colision);
             
         }
 
@@ -39,10 +38,11 @@
             }
         }
 
-        void Render(int[] suelo, int[] techo, int fil, int frame, int puntos, bool colision)
+        static void Render(int[] suelo, int[] techo, int fil, int frame, int puntos, bool colision)
         {
             RenderPajaro(fil, COL_BIRD, colision);
-            RenderTechoSuelo(techo, suelo);
+            RenderTechoSuelo(suelo, techo);
+            RenderPuntos(puntos);
         }
         static void RenderTechoSuelo(int[] techo, int[] suelo)
         {
@@ -52,17 +52,17 @@
                 for (int j = 0; j <= (ALTO - 1 -techo[i]); j++) //En función de cuanto valga el componente repita la acción tantos bloques como haya.
                 {
                     Console.SetCursorPosition((2 * i), (ALTO - 1 -techo[i] -j)); //Pinta el primero y luego el segundo, en la posición 13-X-j; para que suba -j
-                    Console.Write("a");
+                    Console.Write(" ");
                     Console.SetCursorPosition(2 * i + 1, (ALTO -1 -techo[i] -j)); //Pinta el segundo bloque, la lógica es la misma que en computadores
-                    Console.Write("a");
+                    Console.Write(" ");
                 }
                 
                 for (int j = 0; j <= (suelo[i]); j++)       //Mira el componente del suelo y repite el for tantas veces indique.
                 {
                     Console.SetCursorPosition((2 * i), (ALTO - 1 - suelo[i]) + j);  //Posicion desde 13-x+j; para que pinte hacia abajo
-                    Console.Write("a");
+                    Console.Write(" ");
                     Console.SetCursorPosition(2 * i + 1, (ALTO - 1 - suelo[i]) + j); //Segundo bloque
-                    Console.Write("a");
+                    Console.Write(" ");
                 }
             }
             Console.ResetColor();
@@ -79,5 +79,15 @@
             }
             Console.ResetColor();
         }
+        static void RenderPuntos(int puntos)
+        {
+            Console.SetCursorPosition(0, ALTO +1);
+            Console.Write("Puntos: " + puntos);
+        }
+        static void Debug(int[] suelo, int[] techo, int fil, int frame) 
+        {
+            //A rellenar
+        }
+
     }
 }
