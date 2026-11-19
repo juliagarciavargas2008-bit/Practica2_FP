@@ -17,7 +17,7 @@
             bool colision;
             
             Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision);
-            Render(suelo, techo, fil, ascenso, frame, colision);
+            Render(suelo, techo, fil, frame, puntos, colision);
             
         }
 
@@ -44,24 +44,24 @@
             RenderTechoSuelo(suelo, techo);
             RenderPuntos(puntos);
         }
-        static void RenderTechoSuelo(int[] techo, int[] suelo)
+        static void RenderTechoSuelo(int[] suelo, int[] techo)
         {
             Console.BackgroundColor = ConsoleColor.Blue;
             for (int i = 0; i < techo.Length; i++)          //Mira el componente de los Arrays, son iguales asi que da igual quien este en la condición
             {
                 for (int j = 0; j <= (ALTO - 1 -techo[i]); j++) //En función de cuanto valga el componente repita la acción tantos bloques como haya.
                 {
-                    Console.SetCursorPosition((2 * i), (ALTO - 1 -techo[i] -j)); //Pinta el primero y luego el segundo, en la posición 13-X-j; para que suba -j
+                    Console.SetCursorPosition((2 * i), (ALTO - 1 -techo[i]) -j); //Pinta el primero y luego el segundo, en la posición 13-X-j; para que suba -j
                     Console.Write(" ");
-                    Console.SetCursorPosition(2 * i + 1, (ALTO -1 -techo[i] -j)); //Pinta el segundo bloque, la lógica es la misma que en computadores
+                    Console.SetCursorPosition(2 * i + 1, (ALTO -1 -techo[i]) -j); //Pinta el segundo bloque, la lógica es la misma que en computadores
                     Console.Write(" ");
                 }
                 
                 for (int j = 0; j <= (suelo[i]); j++)       //Mira el componente del suelo y repite el for tantas veces indique.
                 {
-                    Console.SetCursorPosition((2 * i), (ALTO - 1 - suelo[i]) + j);  //Posicion desde 13-x+j; para que pinte hacia abajo
+                    Console.SetCursorPosition((2 * i), (ALTO - 1 - suelo[i]) +j);  //Posicion desde 13-x+j; para que pinte hacia abajo
                     Console.Write(" ");
-                    Console.SetCursorPosition(2 * i + 1, (ALTO - 1 - suelo[i]) + j); //Segundo bloque
+                    Console.SetCursorPosition(2 * i + 1, (ALTO - 1 - suelo[i]) +j); //Segundo bloque
                     Console.Write(" ");
                 }
             }
