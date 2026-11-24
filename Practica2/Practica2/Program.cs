@@ -1,4 +1,6 @@
-﻿namespace Practica2
+﻿using System.Runtime.Versioning;
+
+namespace Practica2
 {
     internal class Program
     {
@@ -8,26 +10,26 @@
         SEP_OBS = 6, // separación horizontal entre obstáculos
         HUECO = 7, // hueco de los obstáculos (en vertical)
         COL_BIRD = ANCHO / 3, // columna fija del pájaro
-        IMPULSO = 2, // unidades de ascenso por aleteo
+        IMPULSO = 3, // unidades de ascenso por aleteo
         DELTA = 300; // retardo entre frames (ms)
         static void Main()
         { // programa principal
             int[] suelo, techo;
             int fil, ascenso, frame, puntos;
             bool colision, pausa;
-            char ch = '2';
-            Console.CursorVisible = false;
+            char ch;
 
+            Console.CursorVisible = false;
             Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision, out pausa);
 
             while (!pausa)
-            {
+            { 
                 Borrado(suelo, techo, fil);
                 ch = LeeInput();
                 Avanza(suelo, techo, frame);
-                Mueve(ch, ref fil, ref ascenso);
+                Mueve(ch, ref fil, ref ascenso, frame);
+                colision = Colision(suelo, techo, fil);
                 Render(suelo, techo, fil, frame, puntos, colision);
-                Debug(suelo, techo, fil, frame);
 
 
                 frame++;
@@ -57,10 +59,12 @@
 
         static void Render(int[] suelo, int[] techo, int fil, int frame, int puntos, bool colision)
         {
-            RenderPajaro(fil, colision);
             RenderSueloTecho(suelo, techo);
+            RenderPajaro(fil, colision);
             RenderPuntos(puntos);
+            Debug(suelo, techo, fil, frame);
         }
+
         #region Render auxiliares
         static void RenderSueloTecho(int[] suelo, int[] techo)
         {
@@ -102,6 +106,27 @@
             Console.SetCursorPosition(0, ALTO + 1);
             Console.WriteLine("Puntos: " + puntos);
         }
+        static void Debug(int[] suelo, int[] techo, int fil, int frame)
+        {
+            Console.SetCursorPosition(0, ALTO + 3);
+            Console.Write("Suelo ");
+            for (int i = 0; i < suelo.Length - 1; i++)
+            {
+                Console.Write("{0,2:0} ", suelo[i]);
+            }
+
+            Console.SetCursorPosition(0, ALTO + 2);
+            Console.Write("Techo ");
+            for (int i = 0; i < techo.Length - 1; i++)
+            {
+                Console.Write("{0,2:0} ", techo[i]);
+            }
+
+            Console.SetCursorPosition(0, ALTO + 4);
+            Console.Write($"Pos Bird: {fil,2}");
+            Console.SetCursorPosition(15, ALTO + 4);
+            Console.Write($"Frame: {frame,2} ");
+        }
         #endregion
         static void Borrado(int[] suelo, int[] techo, int fil)
         {
@@ -134,27 +159,7 @@
             Console.WriteLine("  ");
 
         }
-        static void Debug(int[] suelo, int[] techo, int fil, int frame)
-        {
-            Console.SetCursorPosition(0, ALTO + 3);
-            Console.Write("Suelo ");
-            for (int i = 0; i < suelo.Length - 1; i++)
-            {
-                Console.Write("{0,2:0} ", suelo[i]);
-            }
-
-            Console.SetCursorPosition(0, ALTO + 2);
-            Console.Write("Techo ");
-            for (int i = 0; i < techo.Length - 1; i++)
-            {
-                Console.Write("{0,2:0} ", techo[i]);
-            }
-
-            Console.SetCursorPosition(0, ALTO + 4);
-            Console.Write($"Pos Bird: {fil,2}");
-            Console.SetCursorPosition(15, ALTO + 4);
-            Console.Write($"Frame: {frame,2} ");
-        }
+        
         static void Avanza(int[] suelo, int[] techo, int frame)
         {
             for (int i = 0; i < (suelo.Length - 1); i++)
@@ -175,25 +180,28 @@
                 techo[ANCHO - 1] = ALTO - 1;
             }
         }
-        static void Mueve(char ch, ref int fil, ref int ascenso)
+        static void Mueve(char ch, ref int fil, ref int ascenso, int frame)
         {
-            if (ch == 'i')
+            if (ch == 'I') ascenso = IMPULSO;
+            if (ascenso > 0)
             {
-                while (ascenso < IMPULSO) ascenso += 1;
+                ascenso--;
+                fil--;
             }
-            else if (ascenso > -1) ascenso -= 1;
-            if (ascenso == 0) ascenso = -1;
-            fil -= ascenso;
+            else fil++;
+           
+         
         }
         static bool Colision(int[] suelo, int[] techo, int fil)
         {
             bool colision = false;
-            // A rellenar;
+            if ((suelo[COL_BIRD] >= ALTO - 1 - fil) || (techo[COL_BIRD] <= ALTO - 1 - fil)) colision = true;
+
             return colision;
         }
         void Puntua(int[] suelo, int[] techo, int puntos)
         {
-            //A rellenar
+            // A rellenar
         }
         static char LeeInput()
         {
@@ -201,9 +209,11 @@
             while (Console.KeyAvailable)
             {
                 ConsoleKeyInfo tecla = Console.ReadKey(true);
-                if (tecla.Key == ConsoleKey.I) ch = 'i';
+                if (tecla.Key == ConsoleKey.I)
+                {
+                    ch = 'I';
+                }
             }
-
             return ch;
         }
     }

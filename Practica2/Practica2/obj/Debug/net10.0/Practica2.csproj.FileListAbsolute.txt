@@ -28,4 +28,3 @@ D:\Universidad\FP1\Practica2_FP\Practica2\Practica2\obj\Debug\net10.0\Practica2.
 D:\Universidad\FP1\Practica2_FP\Practica2\Practica2\obj\Debug\net10.0\Practica2.genruntimeconfig.cache
 D:\Universidad\FP1\Practica2_FP\Practica2\Practica2\obj\Debug\net10.0\ref\Practica2.dll
 D:\Universidad\FP1\Practica2_FP\Practica2\Practica2\obj\Debug\net10.0\Practica2.csproj.Up2Date
-D:\Universidad\FP1\Practica2_FP\Practica2\Practica2\bin\Debug\net10.0\Practica2.runtimeconfig.dev.json
