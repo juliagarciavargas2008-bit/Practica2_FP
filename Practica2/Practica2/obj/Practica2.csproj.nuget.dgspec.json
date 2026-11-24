@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj": {}
+    "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj": {}
   },
   "projects": {
-    "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj": {
+    "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
+        "projectUniqueName": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
         "projectName": "Practica2",
-        "projectPath": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
-        "packagesPath": "C:\\Users\\moiga\\.nuget\\packages\\",
-        "outputPath": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\obj\\",
+        "projectPath": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
+        "packagesPath": "C:\\Users\\jeico\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\moiga\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jeico\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,7 +41,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "11.0.100"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
@@ -63,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\11.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

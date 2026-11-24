@@ -8,34 +8,38 @@
         SEP_OBS = 6, // separación horizontal entre obstáculos
         HUECO = 7, // hueco de los obstáculos (en vertical)
         COL_BIRD = ANCHO / 3, // columna fija del pájaro
-        IMPULSO = 3, // unidades de ascenso por aleteo
+        IMPULSO = 2, // unidades de ascenso por aleteo
         DELTA = 300; // retardo entre frames (ms)
         static void Main()
         { // programa principal
             int[] suelo, techo;
             int fil, ascenso, frame, puntos;
             bool colision, pausa;
+            char ch = '2';
             Console.CursorVisible = false;
-            
+
             Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision, out pausa);
 
             while (!pausa)
             {
                 Borrado(suelo, techo, fil);
+                ch = LeeInput();
                 Avanza(suelo, techo, frame);
+                Mueve(ch, ref fil, ref ascenso);
                 Render(suelo, techo, fil, frame, puntos, colision);
-                
-                
+                Debug(suelo, techo, fil, frame);
+
 
                 frame++;
                 System.Threading.Thread.Sleep(DELTA);
             }
-            
+
+
         }
 
         static void Inicializa(out int[] suelo, out int[] techo, out int fil, out int ascenso, out int frame, out int puntos, out bool colision, out bool pausa)
         {
-            fil = ALTO/2;
+            fil = ALTO / 2;
             ascenso = -1;
             frame = 0;
             puntos = 0;
@@ -44,46 +48,47 @@
 
             suelo = new int[ANCHO];
             techo = new int[ANCHO];
-            for (int i = 0; i<suelo.Length; i++)
+            for (int i = 0; i < suelo.Length; i++)
             {
                 suelo[i] = 0;
-                techo [i] = ALTO-1;
+                techo[i] = ALTO - 1;
             }
         }
 
         static void Render(int[] suelo, int[] techo, int fil, int frame, int puntos, bool colision)
         {
-            RenderPajaro(fil, COL_BIRD, colision);
+            RenderPajaro(fil, colision);
             RenderSueloTecho(suelo, techo);
             RenderPuntos(puntos);
         }
+        #region Render auxiliares
         static void RenderSueloTecho(int[] suelo, int[] techo)
         {
             Console.BackgroundColor = ConsoleColor.Blue;
             for (int i = 0; i < techo.Length; i++)          //Mira el componente de los Arrays, son iguales asi que da igual quien este en la condición
             {
-                for (int j = 0; j <= (ALTO - 1 -techo[i]); j++) //En función de cuanto valga el componente repita la acción tantos bloques como haya.
+                for (int j = 0; j <= (ALTO - 1 - techo[i]); j++) //En función de cuanto valga el componente repita la acción tantos bloques como haya.
                 {
-                    Console.SetCursorPosition((2 * i), (ALTO - 1 -techo[i]) -j); //Pinta el primero y luego el segundo, en la posición 13-X-j; para que suba -j
+                    Console.SetCursorPosition((2 * i), (ALTO - 1 - techo[i]) - j); //Pinta el primero y luego el segundo, en la posición 13-X-j; para que suba -j
                     Console.Write(" ");
-                    Console.SetCursorPosition(2 * i + 1, (ALTO -1 -techo[i]) -j); //Pinta el segundo bloque, la lógica es la misma que en computadores
+                    Console.SetCursorPosition(2 * i + 1, (ALTO - 1 - techo[i]) - j); //Pinta el segundo bloque, la lógica es la misma que en computadores
                     Console.Write(" ");
                 }
-                
+
                 for (int j = 0; j <= (suelo[i]); j++)       //Mira el componente del suelo y repite el for tantas veces indique.
                 {
-                    Console.SetCursorPosition((2 * i), (ALTO - 1 - suelo[i]) +j);  //Posicion desde 13-x+j; para que pinte hacia abajo
+                    Console.SetCursorPosition((2 * i), (ALTO - 1 - suelo[i]) + j);  //Posicion desde 13-x+j; para que pinte hacia abajo
                     Console.Write(" ");
-                    Console.SetCursorPosition(2 * i + 1, (ALTO - 1 - suelo[i]) +j); //Segundo bloque
+                    Console.SetCursorPosition(2 * i + 1, (ALTO - 1 - suelo[i]) + j); //Segundo bloque
                     Console.Write(" ");
                 }
             }
             Console.ResetColor();
         }
-        static void RenderPajaro(int fil, int COL_BIRD, bool colision)
+        static void RenderPajaro(int fil, bool colision)
         {
             Console.BackgroundColor = ConsoleColor.Magenta;
-            Console.SetCursorPosition(COL_BIRD, fil);
+            Console.SetCursorPosition(2 * COL_BIRD, fil);
             if (!colision) Console.Write("->");
             else
             {
@@ -97,11 +102,12 @@
             Console.SetCursorPosition(0, ALTO + 1);
             Console.WriteLine("Puntos: " + puntos);
         }
-        static void Borrado(int[] suelo, int [] techo, int fil)
+        #endregion
+        static void Borrado(int[] suelo, int[] techo, int fil)
         {
             for (int i = 0; i < techo.Length; i++)          //Mira el componente de los Arrays, son iguales asi que da igual quien este en la condición
             {
-                if (!(techo[i] == ALTO -1))
+                if (!(techo[i] == ALTO - 1))
                 {
                     for (int j = 0; j <= (ALTO - 1 - techo[i]); j++) //En función de cuanto valga el componente repita la acción tantos bloques como haya.
                     {
@@ -111,33 +117,55 @@
                         Console.Write(" ");
                     }
                 }
-                if (!(suelo[i] == 0)) 
+                if (!(suelo[i] == 0))
                 {
                     for (int j = 0; j <= (suelo[i]); j++)       //Mira el componente del suelo y repite el for tantas veces indique.
                     {
-                        Console.SetCursorPosition((2 * i), (ALTO -2 - suelo[i]) + j); //Posicion desde 13-x+j; para que pinte hacia abajo
+                        Console.SetCursorPosition((2 * i), (ALTO - 2 - suelo[i]) + j); //Posicion desde 13-x+j; para que pinte hacia abajo
                         Console.Write(" ");
-                        Console.SetCursorPosition(2 * i + 1, (ALTO -2 - suelo[i]) + j); //Segundo bloque
+                        Console.SetCursorPosition(2 * i + 1, (ALTO - 2 - suelo[i]) + j); //Segundo bloque
                         Console.Write(" ");
                     }
                 }
             }
+
+            Console.ResetColor();
+            Console.SetCursorPosition(2 * COL_BIRD, fil);
+            Console.WriteLine("  ");
+
         }
-        static void Debug(int[] suelo, int[] techo, int fil, int frame) 
+        static void Debug(int[] suelo, int[] techo, int fil, int frame)
         {
-            //A rellenar
+            Console.SetCursorPosition(0, ALTO + 3);
+            Console.Write("Suelo ");
+            for (int i = 0; i < suelo.Length - 1; i++)
+            {
+                Console.Write("{0,2:0} ", suelo[i]);
+            }
+
+            Console.SetCursorPosition(0, ALTO + 2);
+            Console.Write("Techo ");
+            for (int i = 0; i < techo.Length - 1; i++)
+            {
+                Console.Write("{0,2:0} ", techo[i]);
+            }
+
+            Console.SetCursorPosition(0, ALTO + 4);
+            Console.Write($"Pos Bird: {fil,2}");
+            Console.SetCursorPosition(15, ALTO + 4);
+            Console.Write($"Frame: {frame,2} ");
         }
-        static void Avanza(int [] suelo, int[] techo, int frame)
+        static void Avanza(int[] suelo, int[] techo, int frame)
         {
-            for(int i = 0; i < (suelo.Length -1 ); i++)
+            for (int i = 0; i < (suelo.Length - 1); i++)
             {
                 (suelo[i], suelo[i + 1]) = (suelo[i + 1], suelo[i]);
                 (techo[i], techo[i + 1]) = (techo[i + 1], techo[i]);
             }
-            
+
             if (frame % SEP_OBS == 0)
             {
-                int s = rnd.Next(0, ALTO - 1 -HUECO);
+                int s = rnd.Next(0, ALTO - 1 - HUECO);
                 suelo[ANCHO - 1] = s;
                 techo[ANCHO - 1] = s + HUECO;
             }
@@ -147,12 +175,18 @@
                 techo[ANCHO - 1] = ALTO - 1;
             }
         }
-        static void Mueve(char ch, int fil, int ascenso)
+        static void Mueve(char ch, ref int fil, ref int ascenso)
         {
-            //A rellenar
+            if (ch == 'i')
+            {
+                while (ascenso < IMPULSO) ascenso += 1;
+            }
+            else if (ascenso > -1) ascenso -= 1;
+            if (ascenso == 0) ascenso = -1;
+            fil -= ascenso;
         }
         static bool Colision(int[] suelo, int[] techo, int fil)
-        { 
+        {
             bool colision = false;
             // A rellenar;
             return colision;
@@ -160,8 +194,17 @@
         void Puntua(int[] suelo, int[] techo, int puntos)
         {
             //A rellenar
-        } 
+        }
+        static char LeeInput()
+        {
+            char ch = ' ';
+            while (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo tecla = Console.ReadKey(true);
+                if (tecla.Key == ConsoleKey.I) ch = 'i';
+            }
 
-
+            return ch;
+        }
     }
 }
