@@ -5,38 +5,42 @@ namespace Practica2
     internal class Program
     {
         static Random rnd = new Random(); // generador de aleatorios para colocar los obstáculos verticales
-        const bool DEBUG = true; // para sacar información de depuración en el Renderizado
+        const bool DEBUG = false; // para sacar información de depuración en el Renderizado
         const int ANCHO = 22, ALTO = 14, // tamaño del área de juego
         SEP_OBS = 6, // separación horizontal entre obstáculos
         HUECO = 7, // hueco de los obstáculos (en vertical)
         COL_BIRD = ANCHO / 3, // columna fija del pájaro
         IMPULSO = 3, // unidades de ascenso por aleteo
         DELTA = 300; // retardo entre frames (ms)
-        static void Main()
-        { // programa principal
+        static void Main()          // programa principal
+        { 
             int[] suelo, techo;
             int fil, ascenso, frame, puntos;
-            bool colision, pausa;
+            bool colision;
+            bool salir = false, pausa = false, debug = false;
             char ch;
 
             Console.CursorVisible = false;
             Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision, out pausa);
 
-            while (!pausa)
-            { 
-                Borrado(suelo, techo, fil);
+            while ((!salir)&&(!colision))
+            {
                 ch = LeeInput();
-                Avanza(suelo, techo, frame);
-                Mueve(ch, ref fil, ref ascenso, frame);
-                colision = Colision(suelo, techo, fil);
-                Render(suelo, techo, fil, frame, puntos, colision);
+                ProcesaInput(ch, ref salir, ref pausa);
 
+                if (!pausa)
+                {
+                    Borrado(suelo, techo, fil);
+                    Avanza(suelo, techo, frame);
+                    Mueve(ch, ref fil, ref ascenso, frame);
+                    colision = Colision(suelo, techo, fil);
+                    Render(suelo, techo, fil, frame, puntos, colision);
 
-                frame++;
-                System.Threading.Thread.Sleep(DELTA);
+                    frame++;
+                    System.Threading.Thread.Sleep(DELTA);
+                }
+                if (DEBUG) Debug(suelo, techo, fil, frame); ;
             }
-
-
         }
 
         static void Inicializa(out int[] suelo, out int[] techo, out int fil, out int ascenso, out int frame, out int puntos, out bool colision, out bool pausa)
@@ -56,15 +60,12 @@ namespace Practica2
                 techo[i] = ALTO - 1;
             }
         }
-
         static void Render(int[] suelo, int[] techo, int fil, int frame, int puntos, bool colision)
         {
             RenderSueloTecho(suelo, techo);
             RenderPajaro(fil, colision);
-            RenderPuntos(puntos);
-            Debug(suelo, techo, fil, frame);
+            RenderPuntos(puntos); 
         }
-
         #region Render auxiliares
         static void RenderSueloTecho(int[] suelo, int[] techo)
         {
@@ -123,7 +124,7 @@ namespace Practica2
             }
 
             Console.SetCursorPosition(0, ALTO + 4);
-            Console.Write($"Pos Bird: {fil,2}");
+            Console.Write($"Pos Bird: {ALTO - 2 - fil,2}");
             Console.SetCursorPosition(15, ALTO + 4);
             Console.Write($"Frame: {frame,2} ");
         }
@@ -159,7 +160,6 @@ namespace Practica2
             Console.WriteLine("  ");
 
         }
-        
         static void Avanza(int[] suelo, int[] techo, int frame)
         {
             for (int i = 0; i < (suelo.Length - 1); i++)
@@ -189,8 +189,6 @@ namespace Practica2
                 fil--;
             }
             else fil++;
-           
-         
         }
         static bool Colision(int[] suelo, int[] techo, int fil)
         {
@@ -209,12 +207,42 @@ namespace Practica2
             while (Console.KeyAvailable)
             {
                 ConsoleKeyInfo tecla = Console.ReadKey(true);
-                if (tecla.Key == ConsoleKey.I)
-                {
-                    ch = 'I';
-                }
+                if (tecla.Key == ConsoleKey.I) ch = 'I';
+                else if (tecla.Key == ConsoleKey.P) ch = 'P';
+                else if (tecla.Key == ConsoleKey.Q) ch = 'Q';
             }
             return ch;
+        }
+        static void ProcesaInput(char ch, ref bool salir, ref bool pausa)
+        { 
+            if (ch == 'Q') salir = !salir;
+
+            if (!pausa)
+            {
+                if (ch == 'P')
+                {
+                    pausa = true;
+                    for (int i = 0; i < 3; i++)                                     //Pausa el juego, parando el bucle de juego
+                    {                                                               //Escribe pausa borrando una posición arriba y abajo
+                        Console.SetCursorPosition(ANCHO - 2, (ALTO / 2) - 1 + i);
+                        Console.Write(" ");
+                    }
+                    Console.SetCursorPosition((ANCHO - 2), ALTO / 2);
+                    Console.Write("PAUSE");
+                }
+            }
+            else
+            {
+                if (ch == 'P')
+                {
+                    for (int i = 0; i < 5; i++)
+                    {                                                               //Borra la línea de pause
+                        Console.SetCursorPosition(ANCHO - 2 + i, (ALTO / 2));
+                        Console.Write(" ");
+                    }
+                    pausa = false;                                                  //Si se pulsa P de nuevo se despausa, devuelve el false al bool
+                }
+            }
         }
     }
 }
