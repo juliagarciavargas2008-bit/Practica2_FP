@@ -8,19 +8,19 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\jeico\\.nuget\\packages\\": {}
+    "C:\\Users\\pedro\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
+      "projectUniqueName": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
       "projectName": "Practica2",
-      "projectPath": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
-      "packagesPath": "C:\\Users\\jeico\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\obj\\",
+      "projectPath": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Practica2.csproj",
+      "packagesPath": "C:\\Users\\pedro\\.nuget\\packages\\",
+      "outputPath": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jeico\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pedro\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

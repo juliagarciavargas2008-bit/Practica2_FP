@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\",
+  "WorkspaceRootPath": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7095788D-A791-6A18-61DB-416255E2BF0B}|Practica2\\Practica2.csproj|c:\\users\\jeico\\visual studio\\practica2_fp\\practica2\\practica2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7095788D-A791-6A18-61DB-416255E2BF0B}|Practica2\\Practica2.csproj|d:\\universidad\\fp1\\practica2_fp\\practica2\\practica2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7095788D-A791-6A18-61DB-416255E2BF0B}|Practica2\\Practica2.csproj|solutionrelative:practica2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -24,11 +24,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Program.cs",
+              "DocumentMoniker": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Program.cs",
               "RelativeDocumentMoniker": "Practica2\\Program.cs",
-              "ToolTip": "C:\\Users\\jeico\\Visual Studio\\Practica2_FP\\Practica2\\Practica2\\Program.cs",
+              "ToolTip": "D:\\Universidad\\FP1\\Practica2_FP\\Practica2\\Practica2\\Program.cs",
               "RelativeToolTip": "Practica2\\Program.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAAAAcAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAIgAAAAAAAAAAAA4wBAAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-11-20T13:06:04.045Z",
               "EditorCaption": ""

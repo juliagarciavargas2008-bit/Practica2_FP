@@ -1,4 +1,8 @@
-﻿using System.Runtime.Versioning;
+﻿//Julia García Vargas
+//Jerico Marl Valdez Duclayan
+
+
+using System.Runtime.Versioning;
 
 namespace Practica2
 {
@@ -17,40 +21,41 @@ namespace Practica2
             int[] suelo, techo;
             int fil, ascenso, frame, puntos;
             bool colision;
-            bool salir = false, pausa = false, debug = false;
+            bool salir = false, pausa = false, debug = true;
             char ch;
 
             Console.CursorVisible = false;
-            Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision, out pausa);
+            Inicializa(out suelo, out techo, out fil, out ascenso, out frame, out puntos, out colision);
 
             while ((!salir)&&(!colision))
             {
                 ch = LeeInput();
                 ProcesaInput(ch, ref salir, ref pausa);
-
                 if (!pausa)
                 {
                     Borrado(suelo, techo, fil);
                     Avanza(suelo, techo, frame);
-                    Mueve(ch, ref fil, ref ascenso, frame);
+                    Mueve(ch, ref fil, ref ascenso);
                     colision = Colision(suelo, techo, fil);
+                    if (!colision) Puntua(suelo, techo, ref puntos);
                     Render(suelo, techo, fil, frame, puntos, colision);
-
                     frame++;
-                    System.Threading.Thread.Sleep(DELTA);
-                }
-                if (DEBUG) Debug(suelo, techo, fil, frame); ;
+                }  
+                
+                if (debug) Debug(suelo, techo, fil, frame); ;
+                
+                System.Threading.Thread.Sleep(DELTA);
+               
             }
         }
 
-        static void Inicializa(out int[] suelo, out int[] techo, out int fil, out int ascenso, out int frame, out int puntos, out bool colision, out bool pausa)
+        static void Inicializa(out int[] suelo, out int[] techo, out int fil, out int ascenso, out int frame, out int puntos, out bool colision)
         {
             fil = ALTO / 2;
             ascenso = -1;
             frame = 0;
             puntos = 0;
             colision = false;
-            pausa = false;
 
             suelo = new int[ANCHO];
             techo = new int[ANCHO];
@@ -64,7 +69,7 @@ namespace Practica2
         {
             RenderSueloTecho(suelo, techo);
             RenderPajaro(fil, colision);
-            RenderPuntos(puntos); 
+            RenderPuntos(puntos);
         }
         #region Render auxiliares
         static void RenderSueloTecho(int[] suelo, int[] techo)
@@ -124,7 +129,7 @@ namespace Practica2
             }
 
             Console.SetCursorPosition(0, ALTO + 4);
-            Console.Write($"Pos Bird: {ALTO - 2 - fil,2}");
+            Console.Write($"Pos Bird: {ALTO - 1 - fil,2}");
             Console.SetCursorPosition(15, ALTO + 4);
             Console.Write($"Frame: {frame,2} ");
         }
@@ -172,7 +177,7 @@ namespace Practica2
             {
                 int s = rnd.Next(0, ALTO - 1 - HUECO);
                 suelo[ANCHO - 1] = s;
-                techo[ANCHO - 1] = s + HUECO;
+                techo[ANCHO - 1] = s + HUECO +1;
             }
             else
             {
@@ -180,7 +185,7 @@ namespace Practica2
                 techo[ANCHO - 1] = ALTO - 1;
             }
         }
-        static void Mueve(char ch, ref int fil, ref int ascenso, int frame)
+        static void Mueve(char ch, ref int fil, ref int ascenso)
         {
             if (ch == 'I') ascenso = IMPULSO;
             if (ascenso > 0)
@@ -197,9 +202,9 @@ namespace Practica2
 
             return colision;
         }
-        void Puntua(int[] suelo, int[] techo, int puntos)
+        static void Puntua(int[] suelo, int[] techo, ref int puntos)
         {
-            // A rellenar
+            if ((suelo[COL_BIRD] != 0 || techo[COL_BIRD] != ALTO-1)) puntos++;
         }
         static char LeeInput()
         {
